@@ -1,0 +1,32 @@
+
+//********** JOB ****************//
+
+
+
+CREATE EVENT ExecuteInsertRandomData ON SCHEDULE
+        EVERY 10 SECOND
+    ON COMPLETION NOT PRESERVE
+    ENABLE
+    COMMENT ''
+    DO 
+	CALL InsertRandomData();
+
+
+
+//************* SP *******************//
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertRandomData`()
+BEGIN
+	INSERT INTO DATOSSENSOR (
+		IDSENSOR,
+		IDTIPODATO,
+		DATO,
+		FECHA
+	)
+	SELECT 1 AS IDSENSOR,
+	1 AS IDTIPODATO,
+	FLOOR(RAND()*(50-1+1)+1) AS DATO,
+	NOW() AS FECHA;
+END
